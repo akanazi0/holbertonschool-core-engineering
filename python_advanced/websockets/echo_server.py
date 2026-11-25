@@ -4,6 +4,7 @@
 import asyncio
 import websockets
 
+
 async def connection_handler(websocket):
     """Receive messages from a client and echo them back unchanged."""
     async for message in websocket:
