@@ -11,8 +11,8 @@ async def connection_handler(websocket):
 
 
 async def main():
-    """Start the WebSocket server on localhost:8765."""
-    async with websockets.serve(connection_handler, "localhost", 8765):
+    """Start the WebSocket server on 127.0.0.1:8765."""
+    async with websockets.serve(connection_handler, "127.0.0.1", 8765):
         await asyncio.Future()  # Run forever
 
 
