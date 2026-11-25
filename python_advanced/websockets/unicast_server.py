@@ -9,7 +9,7 @@ connected_clients = set()
 
 
 async def connection_handler(websocket):
-    """Register a client, reply only to its messages, and unregister on exit."""
+    """Register a client, reply only to its messages, and unregister on exit"""
     connected_clients.add(websocket)
     try:
         async for message in websocket:
