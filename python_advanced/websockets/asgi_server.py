@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
-"""ASGI application serving an HTML page and a WebSocket echo endpoint."""
+"""ASGI application serving static web client files and a WebSocket."""
 
+from pathlib import Path
 from starlette.applications import Starlette
-from starlette.responses import HTMLResponse
-from starlette.routing import Route, WebSocketRoute
+from starlette.routing import Mount, WebSocketRoute
+from starlette.staticfiles import StaticFiles
 from starlette.websockets import WebSocketDisconnect
 
-
-async def homepage(request):
-    """Serve the root HTML response."""
-    return HTMLResponse("<h1>WebSocket Echo</h1>")
+BASE_DIR = Path(__file__).resolve().parent
 
 
 async def websocket_endpoint(websocket):
@@ -25,7 +23,11 @@ async def websocket_endpoint(websocket):
 
 app = Starlette(
     routes=[
-        Route("/", homepage),
         WebSocketRoute("/ws", websocket_endpoint),
+        Mount(
+            "/",
+            app=StaticFiles(directory=str(BASE_DIR), html=True),
+            name="static",
+        ),
     ]
 )
